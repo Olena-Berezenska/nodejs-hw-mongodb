@@ -1,4 +1,4 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const initMongoConnection = async () => {
