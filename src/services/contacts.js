@@ -22,12 +22,10 @@ export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await contactsCollection.findOneAndUpdate(
     { _id: contactId },
     { $set: payload },
+    { returnDocument: 'after', ...options },
   );
 
   if (!rawResult || !rawResult.value) return null;
 
-  return {
-    contact: rawResult.value,
-    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
-  };
+  return rawResult.value;
 };
