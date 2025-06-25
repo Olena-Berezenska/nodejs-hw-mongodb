@@ -11,8 +11,8 @@ export const createContactSchema = Joi.object({
     .min(3)
     .max(20)
     .pattern(/^\+?[0-9]{10,15}$/)
-    .required()
-    .message('Phone number must be a valid international format'),
+    .message('Phone number must be a valid international format')
+    .required(),
   email: Joi.string().email().min(3).max(20),
   isFavourite: Joi.boolean(),
   contactType: Joi.string()
