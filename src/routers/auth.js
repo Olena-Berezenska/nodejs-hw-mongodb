@@ -2,10 +2,11 @@ import express from 'express';
 import {
   loginController,
   registerUserController,
+  refreshController,
+  logoutController,
 } from '../controllers/auth.js';
-import { registerUserSchema } from '../validation/auth.js';
+import { registerUserSchema, loginUserSchema } from '../validating/auth.js';
 import { validateUserBody } from '../middlewares/validateUserBody.js';
-import { loginUserSchema } from '../validating/auth.js';
 const router = express.Router();
 
 router.post(
@@ -14,4 +15,6 @@ router.post(
   registerUserController,
 );
 router.post('/login', validateUserBody(loginUserSchema), loginController);
+router.post('/refresh', refreshController);
+router.post('/logout', logoutController);
 export default router;
