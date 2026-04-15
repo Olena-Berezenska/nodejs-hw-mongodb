@@ -141,3 +141,6 @@ dist
 .vscode
 .DS_Store
 .idea
+
+# Temporary uploaded files
+uploads/
