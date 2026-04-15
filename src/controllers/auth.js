@@ -1,6 +1,4 @@
-// src/controllers/auth.js
-
-import { registerUser, loginUserService, refreshSessionService, logoutService } from '../services/auth.js';
+import { registerUser, loginUserService, refreshSessionService, logoutService, sendResetEmailService, resetPasswordService } from '../services/auth.js';
 
 export const registerUserController = async (req, res, next) => {
   try {
@@ -27,7 +25,7 @@ export const loginController = async (req, res, next) => {
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       sameSite: 'strict',
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
@@ -70,6 +68,36 @@ export const logoutController = async (req, res, next) => {
     res.clearCookie('refreshToken');
 
     res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const sendResetEmailController = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await sendResetEmailService(email);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Reset password email has been successfully sent.',
+      data: {},
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetPasswordController = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    await resetPasswordService(token, password);
+
+    res.status(200).json({
+      status: 200,
+      message: 'Password has been successfully reset.',
+      data: {},
+    });
   } catch (err) {
     next(err);
   }
